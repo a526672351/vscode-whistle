@@ -1,0 +1,145 @@
+{
+	"name": "vscode-whistle",
+	"displayName": "whistle",
+	"description": "A cross-platform Web debugging agent tool based on Node implementation",
+	"publisher": "a526672351",
+	"version": "0.0.1",
+	"engines": {
+		"vscode": "^1.46.0"
+	},
+	"categories": [
+		"Other"
+	],
+	"keywords": [
+		"whistle",
+		"w2",
+		"debug"
+	],
+	"icon": "assets/logo.png",
+	"activationEvents": [
+		"onView:whistleScripts"
+	],
+	"main": "./extension.js",
+	"contributes": {
+		"viewsContainers": {
+			"activitybar": [
+				{
+					"id": "whistleApp",
+					"title": "Whistle",
+					"icon": "assets/whistle-logo.png"
+				}
+			]
+		},
+		"views": {
+			"whistleApp": [
+				{
+					"id": "whistlePages",
+					"name": "Whistle 调试"
+				},
+				{
+					"id": "whistleScripts",
+					"name": "Whistle 服务"
+				}
+			]
+		},
+		"viewsWelcome": [
+			{
+				"view": "whistlePages",
+				"contents": "Whistle 调试初始化"
+			},
+			{
+				"view": "whistleScripts",
+				"contents": "Whistle 命令初始化"
+			}
+		],
+		"commands": [
+			{
+				"command": "whistle.npmScripts.refresh",
+				"title": "刷新",
+				"icon": {
+				  "light": "assets/light/refresh.svg",
+				  "dark": "assets/dark/refresh.svg"
+				}
+			},
+			{
+				"command": "whistle.npmScripts.executeCommand",
+				"title": "运行",
+				"icon": {
+					"light": "assets/light/run.svg",
+					"dark": "assets/dark/run.svg"
+				}
+			},			{
+				"command": "whistle.npmScripts.setProxyPort",
+				"title": "设置",
+				"icon": {
+					"light": "assets/light/setting.svg",
+					"dark": "assets/dark/setting.svg"
+				}
+			},
+			{
+				"command": "whistle.pages.openFile",
+				"title": "调试",
+				"icon": {
+					"light": "assets/light/run.svg",
+					"dark": "assets/dark/run.svg"
+				}
+			}
+		],
+		"menus": {
+			"view/title": [
+			  {
+				"command": "whistle.npmScripts.refresh",
+				"when": "view == whistleScripts",
+				"group": "navigation"
+			  },
+			  {
+				"command": "whistle.npmScripts.setProxyPort",
+				"when": "view == whistleScripts",
+				"group": "navigation"
+			  }
+			],
+			"view/item/context": [
+				{
+					"command": "whistle.npmScripts.executeCommand",
+					"when": "view == whistleScripts && viewItem == script",
+					"group": "inline"
+				},
+				{
+					"command": "whistle.pages.openFile",
+					"when": "view == whistlePages && viewItem == page",
+					"group": "inline"
+				}
+			]
+		},
+		"configuration": {
+			"title": "Whistle",
+			"properties": {
+			  "whistle.proxyPort": {
+				"type": "string",
+				"default": "8899",
+				"description": "whistle 监听端口"
+			  }
+			}
+		}
+	},
+	"repository": {
+		"type": "git",
+		"url": "https://github.com/a526672351/vscode-whistle.git"
+	},
+	"scripts": {
+		"lint": "eslint .",
+		"pretest": "yarn run lint",
+		"test": "node ./test/runTest.js"
+	},
+	"devDependencies": {
+		"@types/vscode": "^1.46.0",
+		"@types/glob": "^7.1.1",
+		"@types/mocha": "^7.0.2",
+		"@types/node": "^13.11.0",
+		"eslint": "^6.8.0",
+		"glob": "^7.1.6",
+		"mocha": "^7.1.2",
+		"typescript": "^3.8.3",
+		"vscode-test": "^1.3.0"
+	}
+}
